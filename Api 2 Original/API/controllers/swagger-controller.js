@@ -1,5 +1,3 @@
-const config = require("../configs/env");
-
 const swaggerJSDoc = require("swagger-jsdoc");
 
 const swaggerDefinition = {
@@ -10,7 +8,7 @@ const swaggerDefinition = {
     description: "Example OAuth2.0 protected API",
     contact: { name: "inf-21-dw2-g02" },
   },
-  servers: [{ url: "http://localhost:" + config.port }],
+  servers: [{ url: "http://localhost:8080"}],
   security: [
     {
       OAuth2Security: [],

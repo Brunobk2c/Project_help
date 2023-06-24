@@ -3,12 +3,12 @@ const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const db = require("./db/models");
 
 // ------------------------------------------------------------ Importações Internas ------------------------------------------------------------
-const config = require("./src/configs/env");
 const passport = require("./src/middlewares/passport");
 const swaggerUi = require("swagger-ui-express");
-const swaggerSpec = require("./src/controllers/swagger-controller");
+const swaggerSpec = require("./controllers/swagger-controller");
 const routes = require('./src/routes/Routes');
 
 // ------------------------------------------------------------ Instânciação ------------------------------------------------------------
@@ -37,6 +37,6 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/', routes); //to use the routes
 
 // start server
-app.listen(config.port, function () {
-  console.log(`App running on http://localhost:${config.port}`);
+app.listen(8080, function () {
+  console.log(`App running on http://localhost:8080`);
 });
