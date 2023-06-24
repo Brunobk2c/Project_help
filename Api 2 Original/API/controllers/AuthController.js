@@ -2,22 +2,22 @@ const path = require('path');
 const axios = require("axios");
 
 const login = (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "/public/login.html"));
+    res.sendFile(path.join(__dirname, "..", "/src/public/login.html"));
 };
 
 const logout = (req, res) => {
     req.logout();
-    res.sendFile(path.join(__dirname, "..", "/public/login.html"));
+    res.sendFile(path.join(__dirname, "..", "/src/public/login.html"));
 };
 
 const protected = (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "/public/protected.html"));
+    res.sendFile(path.join(__dirname, "..", "/src/public/protected.html"));
 };
 
 const authGitHub = (req, res) => {};
 
 const authCallback = (req, res) => {
-    res.redirect("/");
+    res.redirect("/auth/github/callback");
 };
 
 const me = (req, res) => {
