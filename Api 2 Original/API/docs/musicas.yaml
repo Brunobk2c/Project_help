@@ -1,0 +1,157 @@
+paths:
+  /musicas:
+    get:
+      tags:
+        - Musicas
+      summary: Retrieve Musicas
+      security: 
+             [{ OAuth2Security: [] }] # Oauth 2
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success Message
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/definitions/musicas"
+        "401":
+          description: Unauthorized
+    post:
+      tags:
+        - Musicas
+      summary: Create Musicas
+      security:
+          [{ OAuth2Security: [] }] # Oauth 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/musicasEx"
+          application/xml:
+            schema:
+              $ref: "#/definitions/musicasEx"
+      responses:
+        "200":
+          description: Create a Musicas model instance
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/musicas"
+            application/xml:
+              schema:
+                $ref: "#/definitions/musicas"
+        "401":
+          description: Unauthorized
+  /musicas/{id}:
+    get:
+      tags:
+        - Musicas
+      summary: Retrieve Musicas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 1
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Retrieve Musicas id 1
+              value: 1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/musicas"
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+    put:
+      tags:
+        - Musicas
+      summary: Update Musicas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 1
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Update Musicas id 1
+              value: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/musicasEx"
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Musicas apdated success
+                $ref: "#/definitions/musicas"
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+    delete:
+      tags:
+        - Musicas
+      summary: Delete Musicas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Delete Musicas id 1
+              value: 1
+      responses:
+        "204":
+          description: No content
+        "404":
+          description: id not found
+definitions:
+  musicas:
+    type: object
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      genero:
+        type: string
+      dataLancamento:
+        type: string
+  musicasEx:
+    type: object
+    properties:
+      nome:
+        type: string
+      genero:
+        type: string
+      dataLancamento:
+        type: string
+

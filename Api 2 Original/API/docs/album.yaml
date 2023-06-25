@@ -1,0 +1,149 @@
+paths:
+  /album:
+    get:
+      tags:
+        - Album
+      summary: Retrieve Album
+      security: 
+             [{ OAuth2Security: [] }] # Oauth 2
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success Message
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/definitions/album"
+        "401":
+          description: Unauthorized
+    post:
+      tags:
+        - Album
+      summary: Create Album
+      security:
+          [{ OAuth2Security: [] }] # Oauth 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/albumEx"
+          application/xml:
+            schema:
+              $ref: "#/definitions/albumEx"
+      responses:
+        "200":
+          description: Create a Album model instance
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/album"
+            application/xml:
+              schema:
+                $ref: "#/definitions/album"
+        "401":
+          description: Unauthorized
+  /album/{id}:
+    get:
+      tags:
+        - Album
+      summary: Retrieve Album
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 1
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Retrieve Album id 1
+              value: 1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/album"
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+    put:
+      tags:
+        - Album
+      summary: Update album
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 1
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Update Album id 1
+              value: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/albumEx"
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Album apdated success
+                $ref: "#/definitions/album"
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+    delete:
+      tags:
+        - Album
+      summary: Delete Album
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Delete Album id 1
+              value: 1
+      responses:
+        "204":
+          description: No content
+        "404":
+          description: id not found
+definitions:
+  album:
+    type: object
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+  albumEx:
+    type: object
+    properties:
+      nome:
+        type: string
+     
