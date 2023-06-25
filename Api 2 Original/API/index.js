@@ -3,13 +3,13 @@ const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
 const bodyParser = require("body-parser");
-const db = require("./db/models");
 
 // ------------------------------------------------------------ Importações Internas ------------------------------------------------------------
-const passport = require("./src/middlewares/passport");
+const passport = require("./src/middlewares/passport"); // Update the import statement
+
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./controllers/swagger-controller");
-const routes = require('./src/routes/Routes');
+const router = require("./src/routes/Routes");
 
 // ------------------------------------------------------------ Instânciação ------------------------------------------------------------
 const app = express();
@@ -34,7 +34,7 @@ app.get("/docs/swagger.json", (req, res) => res.json(swaggerSpec));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // ------------------------------------------------------------ utilização rotas ------------------------------------------------------------
-app.use('/', routes); //to use the routes
+app.use(router); // to use the routes
 
 // start server
 app.listen(8080, function () {
