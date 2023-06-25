@@ -52,8 +52,8 @@ router.get("/album/:id", async (req, res) => {
         where: {id},
     })
 
-    if (aurtor) {
-        return res.json(aurtor);
+    if (album) {
+        return res.json(album);
     }else{
         return res.status(404).json({ error: 'Album não encontrado' });
     }
