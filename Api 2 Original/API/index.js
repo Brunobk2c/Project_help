@@ -10,6 +10,7 @@ const passport = require("./src/middlewares/passport"); // Update the import sta
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./controllers/swagger-controller");
 const router = require("./src/routes/Routes");
+const db = require("./db/models");
 
 // ------------------------------------------------------------ Instânciação ------------------------------------------------------------
 const app = express();

@@ -1,11 +1,11 @@
 version: '3.7'
 
 services:
-  mysql:
+  db:
     container_name: musicas-mysql
     build:
       context: .
-      dockerfile: Dockerfile.mysql
+      dockerfile: dockerfile.mysql
     environment:
       MYSQL_PASSWORD: 12345678
     volumes:
@@ -18,7 +18,7 @@ services:
 
   app:
     depends_on:
-      - mysql
+      - db
     container_name: musicas-app
     build:
       context: .
@@ -29,9 +29,18 @@ services:
       MYSQL_PASSWORD: 12345678
       MYSQL_DB: musicas
     ports:
-      - 3000:3000
+      - 8080:8080
     networks:
       - musicas-network
+    command: 
+             sh -c 'if [ ! -f /app/.migration_executed ]; 
+             then echo "Create and Running database migration..."; 
+             sleep 16; 
+             npx sequelize-cli db:create; 
+             npx sequelize-cli db:migrate; 
+             npx sequelize-cli db:seed:all;
+             touch /app/.migration_executed; 
+             fi && sleep 10 && npm start'
 
 networks:
   musicas-network:

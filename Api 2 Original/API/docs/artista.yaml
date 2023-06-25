@@ -1,0 +1,153 @@
+paths:
+  /artista:
+    get:
+      tags:
+        - Artista
+      summary: Retrieve Artista
+      security: 
+             [{ OAuth2Security: [] }] # Oauth 2
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success Message
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/definitions/artista"
+        "401":
+          description: Unauthorized
+    post:
+      tags:
+        - Artista
+      summary: Create Artista
+      security:
+          [{ OAuth2Security: [] }] # Oauth 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/artistaEx"
+          application/xml:
+            schema:
+              $ref: "#/definitions/artistaEx"
+      responses:
+        "200":
+          description: Create a Artista model instance
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/artista"
+            application/xml:
+              schema:
+                $ref: "#/definitions/artista"
+        "401":
+          description: Unauthorized
+  /artista/{id}:
+    get:
+      tags:
+        - Artista
+      summary: Retrieve Artista
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 1
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Retrieve Artista id 1
+              value: 1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/artista"
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+    put:
+      tags:
+        - Artista
+      summary: Update Artista
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 1
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Update Artista id 1
+              value: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/artistaEx"
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Artista apdated success
+                $ref: "#/definitions/artista"
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+    delete:
+      tags:
+        - Artista
+      summary: Delete Artista
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Delete Artista id 1
+              value: 1
+      responses:
+        "204":
+          description: No content
+        "404":
+          description: id not found
+definitions:
+  artista:
+    type: object
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      pais:
+        type: string
+  artistaEx:
+    type: object
+    properties:
+      nome:
+        type: string
+      pais:
+        type: string
+
