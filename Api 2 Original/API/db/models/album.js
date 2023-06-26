@@ -15,7 +15,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Album.init({
-    nome: DataTypes.STRING
+    nome: DataTypes.STRING,
+    artistaId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Artista',
+        key: 'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Album',

@@ -1,0 +1,41 @@
+paths:
+  /artistaAlbum/{id}:
+    get:
+      tags:
+        - ArtistaAlbum
+      summary: Retrieve Artista do Album
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 1
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Retrieve Artista do Album id 1
+              value: 1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/artistaAlbum"
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+definitions:
+  artistaAlbum:
+    type: object
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      pais:
+        type: string

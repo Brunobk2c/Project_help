@@ -5,18 +5,23 @@ const AuthController = require('../../controllers/AuthController');
 const app = express();
 
 // ---------- MusicasController ----------
-const musicas = require('../../controllers/musicas')
-app.use('/', musicas)
+const musicas = require('../../controllers/musicas');
+app.use('/', musicas);
 
 // ---------- ArtistasController ----------
 const artista = require('../../controllers/artista');
 app.use('/', artista);
 
 // ---------- AlbumController ----------
-const album = require('../../controllers/album')
-app.use('/', album)
+const album = require('../../controllers/album');
+app.use('/', album);
 
 // ---------- AlbumporArtistaController ----------
+const albumArtista = require('../../controllers/albumArtista');
+app.use('/', albumArtista);
+
+const artistaAlbum = require('../../controllers/artistaAlbum');
+app.use('/', artistaAlbum)
 // ---------- MusicasporArtistaController ----------
 // ---------- MusicasporGeneroController ----------
 // ---------- AuthController ----------
