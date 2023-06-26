@@ -13,7 +13,7 @@ const { where } = require('sequelize');
 // criar rota get
 router.get("/album", async (req, res) => {
     const album = await db.Album.findAll({
-        attributes: ['id', 'nome']
+        attributes: ['id', 'nome', 'artistaId']
     });
 
     if (album){
@@ -29,11 +29,11 @@ router.get("/album", async (req, res) => {
 // criar rota post
 router.post("/album", async (req, res) => {
     try {
-      const { nome} = req.body;
+      const {nome, artistaId} = req.body;
       const {dados} = req.body;
       console.log(dados)
  
-      const album = await db.Album.create({ nome});
+      const album = await db.Album.create({ nome, artistaId});
   
       return res.json(album);
     } catch (error) {
@@ -47,8 +47,8 @@ router.post("/album", async (req, res) => {
 // criar rota get by id
 router.get("/album/:id", async (req, res) => {
     const {id} = req.params;
-    const aurtor = await db.Album.findOne({
-        attributes: ['id', 'nome'],
+    const album = await db.Album.findOne({
+        attributes: ['id', 'nome', 'artistaId'],
         where: {id},
     })
 
@@ -62,8 +62,8 @@ router.get("/album/:id", async (req, res) => {
 // criar a rota put 
 router.put('/album/:id', async (req, res) => {
     const {id} = req.params;
-    var  { nome} = req.body;
-    await db.Album.update({nome: nome}, {where:{id}})
+    var  { nome, artistaId} = req.body;
+    await db.Album.update({nome: nome, artistaId: artistaId}, {where:{id}})
     .then(()=>{
         return res.json({mensagem: 'Dados do Album atualizado'});
     }).catch(()=>{

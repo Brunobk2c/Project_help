@@ -141,9 +141,15 @@ definitions:
         type: integer
       nome:
         type: string
+      artistaId:
+        type: integer
   albumEx:
     type: object
     properties:
       nome:
         type: string
+      artistaId: 
+        type: integer
+      albumId:
+        type: integer
      

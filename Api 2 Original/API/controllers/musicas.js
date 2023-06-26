@@ -13,7 +13,7 @@ const { where } = require('sequelize');
 // criar rota get
 router.get("/musicas", async (req, res) => {
     const musicas = await db.Musicas.findAll({
-        attributes: ['id', 'genero', 'dataLancamento']
+        attributes: ['id', 'genero', 'dataLancamento', 'artistaId', 'albumId']
     });
 
     if (musicas){
@@ -29,11 +29,11 @@ router.get("/musicas", async (req, res) => {
 // criar rota post
 router.post("/musicas", async (req, res) => {
     try {
-      const { nome, genero, dataLancamento } = req.body;
+      const { nome, genero, dataLancamento, artistaId, albumId } = req.body;
       const {dados} = req.body;
       console.log(dados)
  
-      const musicas = await db.Musicas.create({ nome, genero, dataLancamento });
+      const musicas = await db.Musicas.create({ nome, genero, dataLancamento, artistaId, albumId });
   
       return res.json(musicas);
     } catch (error) {
@@ -47,13 +47,13 @@ router.post("/musicas", async (req, res) => {
 // criar rota get by id
 router.get("/musicas/:id", async (req, res) => {
     const {id} = req.params;
-    const aurtor = await db.Musicas.findOne({
+    const musicas = await db.Musicas.findOne({
         attributes: ['id', 'nome', 'genero', 'dataLancamento'],
         where: {id},
     })
 
-    if (aurtor) {
-        return res.json(aurtor);
+    if (musicas) {
+        return res.json(musicas);
     }else{
         return res.status(404).json({ error: 'Musica não encontrada' });
     }
