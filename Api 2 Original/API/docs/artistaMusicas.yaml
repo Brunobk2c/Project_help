@@ -1,0 +1,41 @@
+paths:
+  /artistaMusicas/{id}:
+    get:
+      tags:
+        - ArtistaMusicas
+      summary: Retrieve Artista do Musicas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 1
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Retrieve Artista do Musicas id 1
+              value: 1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/artistaMusicas"
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+definitions:
+  artistaMusicas:
+    type: object
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      pais:
+        type: string

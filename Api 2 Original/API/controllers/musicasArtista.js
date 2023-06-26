@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { Album, Artista } = require('../db/models');
+const { Musicas, Artista } = require('../db/models');
 
-router.get('/albumArtista/:Id', async (req, res) => {
+router.get('/musicasArtista/:Id', async (req, res) => {
   try {
     const { Id } = req.params;
 
@@ -12,15 +12,15 @@ router.get('/albumArtista/:Id', async (req, res) => {
       return res.status(404).json({ error: 'Artista não encontrado' });
     }
 
-    const album = await Album.findAll({
+    const musicas = await Musicas.findAll({
       where: {artistaId: Id},
-      attributes: ['id', 'nome']
+      attributes: ['id', 'nome', 'genero', 'dataLancamento']
     });
 
-    return res.json(album);
+    return res.json(musicas);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'Erro ao buscar os albums do artista' });
+    return res.status(500).json({ error: 'Erro ao buscar os musicas do artista' });
   }
 });
 

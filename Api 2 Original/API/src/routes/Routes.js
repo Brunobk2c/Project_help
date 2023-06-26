@@ -18,15 +18,19 @@ app.use('/', album);
 
 // ---------- AlbumporArtistaController ----------
 const albumArtista = require('../../controllers/albumArtista');
-app.use('/', albumArtista);
-
 const artistaAlbum = require('../../controllers/artistaAlbum');
-app.use('/', artistaAlbum)
-// ---------- MusicasporArtistaController ----------
-// ---------- MusicasporGeneroController ----------
-// ---------- AuthController ----------
+app.use('/', albumArtista);
+app.use('/', artistaAlbum);
 
-app.get('/protected', AuthController.protected)
+// ---------- MusicasporArtistaController ----------
+const musicasArtista = require('../../controllers/musicasArtista');
+const artistaMusicas = require('../../controllers/artistaMusicas');
+app.use('/', musicasArtista);
+app.use('/', artistaMusicas);
+
+
+// ---------- AuthController ----------
+app.get('/protected', AuthController.protected);
 app.get('/login', AuthController.login);
 app.get('/logout', AuthController.logout);
 app.get('/me', auth, AuthController.me);
