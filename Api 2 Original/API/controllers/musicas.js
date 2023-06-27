@@ -13,7 +13,7 @@ const { where } = require('sequelize');
 // criar rota get
 router.get("/musicas", async (req, res) => {
     const musicas = await db.Musicas.findAll({
-        attributes: ['id', 'genero', 'dataLancamento', 'artistaId', 'albumId']
+        attributes: ['id','nome', 'genero', 'dataLancamento', 'artistaId', 'albumId']
     });
 
     if (musicas){
