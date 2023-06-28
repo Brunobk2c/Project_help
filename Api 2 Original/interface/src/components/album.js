@@ -1,47 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import './artista.css';
+import './album.css';
 import { Link } from 'react-router-dom';
 
 
-const Artista = () => {
-  const [artistaData, setArtistaData] = useState([]);
+const Album = () => {
+  const [albumData, setAlbumData] = useState([]);
   const [isCreating, setIsCreating] = useState(false);
-  const [newArtistaData, setNewArtistaData] = useState({
+  const [newAlbumData, setNewAlbumData] = useState({
     id: '',
     nome: '',
-    pais: '',
+    artistaId: ''
   });
-  const [selectedArtistaId, setSelectedArtistaId] = useState(null);
+  const [selectedAlbumId, setSelectedAlbumId] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  async function fetchArtista() {
-    const response = await fetch(`http://localhost:8080/artista`);
+  async function fetchAlbum() {
+    const response = await fetch(`http://localhost:8080/album`);
     const data = await response.json();
     return data;
   }
 
-  async function createArtista(artistaData) {
+  async function createAlbum(albumData) {
     try {
-      const response = await fetch('http://localhost:8080/artista', {
+      const response = await fetch('http://localhost:8080/album', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(artistaData),
+        body: JSON.stringify(albumData),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create artista');
+        throw new Error('Failed to create album');
       }
 
       // Author created successfully, fetch the updated list of authors
-      const updatedArtista = await fetchArtista();
-      setArtistaData(updatedArtista);
+      const updatedAlbum = await fetchAlbum();
+      setAlbumData(updatedAlbum);
       setIsCreating(false);
-      setNewArtistaData({
+      setNewAlbumData({
         id: '',
         nome: '',
-        pais: '',
+        artistaId: ''
+
       });
     } catch (error) {
       console.error(error);
@@ -49,9 +50,9 @@ const Artista = () => {
     }
   }
 
-  async function deleteArtista(id) {
+  async function deleteAlbum(id) {
     try {
-      const response = await fetch(`http://localhost:8080/artista/${id}`, {
+      const response = await fetch(`http://localhost:8080/album/${id}`, {
         method: 'DELETE',
       });
 
@@ -60,17 +61,17 @@ const Artista = () => {
       }
 
       // Author deleted successfully, fetch the updated list of authors
-      const updatedArtista = await fetchArtista();
-      setArtistaData(updatedArtista);
+      const updatedAlbum = await fetchAlbum();
+      setAlbumData(updatedAlbum);
     } catch (error) {
       console.error(error);
       // Handle the error here, show an error message, or perform any necessary actions
     }
   }
 
-  async function updateArtista(id, updatedData) {
+  async function updateAlbum(id, updatedData) {
     try {
-      const response = await fetch(`http://localhost:8080/artista/${id}`, {
+      const response = await fetch(`http://localhost:8080/album/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -83,9 +84,9 @@ const Artista = () => {
       }
   
       // Author updated successfully, fetch the updated list of authors
-      const updatedArtista = await fetchArtista();
-      setArtistaData(updatedArtista);
-      setSelectedArtistaId(null);
+      const updatedAlbum = await fetchAlbum();
+      setAlbumData(updatedAlbum);
+      setSelectedAlbumId(null);
       setIsUpdating(false);
     } catch (error) {
       console.error(error);
@@ -94,83 +95,84 @@ const Artista = () => {
   }
 
   useEffect(() => {
-    fetchArtista().then((data) => {
-      setArtistaData(data);
+    fetchAlbum().then((data) => {
+      setAlbumData(data);
       console.log(data);
     });
   }, []);
 
   const handleEditClick = (id) => {
-    setSelectedArtistaId(id);
+    setSelectedAlbumId(id);
     setIsUpdating(true);
   };
 
   return (
     <div>
-      <h2>Página de Artista</h2>
-      {artistaData.length === 0 ? (
+      <h2>Página de Album</h2>
+      {albumData.length === 0 ? (
         <div>
           <p>Carregando os dados...</p>
         </div>
       ) : (
         <div className="table-container">
           <h3>Os dados foram carregados com sucesso!</h3>
-          <Link to="/artista-form">
-             <button className="create-button-artista">Create Artista</button>
+          <Link to="/album-form">
+             <button className="create-button-artista">Create Album</button>
           </Link>
-
+          
           <table className="custom-table">
             <thead>
               <tr>
                 <th>Id</th>
                 <th>Nome</th>
-                <th>Pais</th>
+                <th>ArtistaId</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {artistaData.map((artista) => (
-                <tr key={artista.id}>
-                  <td>{artista.id}</td>
-                  <td>{artista.nome}</td>
-                  <td>{artista.pais}</td>
+              {albumData.map((album) => (
+                <tr key={album.id}>
+                  <td>{album.id}</td>
+                  <td>{album.nome}</td>
+                  <td>{album.artistaId}</td>
+
                   <td>
-                    <button onClick={() => handleEditClick(artista.id)} className='artistaButton'>Edit</button>
-                    <button onClick={() => deleteArtista(artista.id)} className='artistaButtonD'>Delete</button>
+                    <button onClick={() => handleEditClick(album.id)} className='albumButton'>Edit</button>
+                    <button onClick={() => deleteAlbum(album.id)} className='albumButtonD'>Delete</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {isUpdating && selectedArtistaId && (
+          {isUpdating && selectedAlbumId && (
   <div>
-    <h3>Update Artista</h3>
+    <h3>Update Album</h3>
     <form
       onSubmit={(e) => {
         e.preventDefault();
         const updatedData = {
           nome: document.getElementById('updated-nome').value,
-          pais: document.getElementById('updated-pais').value,
+          artistaId: document.getElementById('updated-artistaId').value
         };
-        updateArtista(selectedArtistaId, updatedData);
+        updateAlbum(selectedAlbumId, updatedData);
       }}
     >
       <label>
         Nome:
-        <input type="text" id="updated-nome" defaultValue={newArtistaData.nome} />
+        <input type="text" id="updated-nome" defaultValue={newAlbumData.nome} />
       </label>
       <label>
-        Pais:
+        ArtistaId:
         <input
           type="text"
-          id="updated-pais"
-          defaultValue={newArtistaData.pais}
+          id="updated-artistaId"
+          defaultValue={newAlbumData.artistaId}
         />
       </label>
-      <button type="submit" className="artistaButton">
+      <button type="submit" className="albumButton">
         Update
       </button>
-      <button onClick={() => setIsUpdating(false)} className="artistaButtonD">
+      <button onClick={() => setIsUpdating(false)} className="albumButtonCa">
         Cancel
       </button>
     </form>
@@ -178,34 +180,34 @@ const Artista = () => {
 )}
         </div>
       )}
-  </div>
+    </div>
   );
 };
 
-const ArtistaId = ({ id }) => {
-  const [artistaData, setArtistaData] = useState([]);
+const AlbumId = ({ id }) => {
+  const [albumData, setAlbumData] = useState([]);
 
   useEffect(() => {
-    const fetchArtista = async () => {
-      const response = await fetch(`http://localhost:8080/artista/${id}`);
+    const fetchAlbum = async () => {
+      const response = await fetch(`http://localhost:8080/album/${id}`);
       const data = await response.json();
-      setArtistaData(data);
+      setAlbumData(data);
       console.log(data);
     };
 
-    fetchArtista();
+    fetchAlbum();
   }, [id]);
 
   return (
     <div>
-      {artistaData.length === 0 ? (
+      {albumData.length === 0 ? (
         <div>
           <p>..</p>
         </div>
       ) : (
         <div>
-          <div key={artistaData.id}>
-          <p>{artistaData.nome} {artistaData.pais}</p>
+          <div key={albumData.id}>
+          <p>{albumData.nome} {albumData.artistaId} </p>
           </div>
         </div>
       )}
@@ -213,4 +215,4 @@ const ArtistaId = ({ id }) => {
   );
 }
 
-export { Artista, ArtistaId };
+export { Album, AlbumId };

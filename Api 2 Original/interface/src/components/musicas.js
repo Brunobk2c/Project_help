@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './musicas.css';
+import { Link } from 'react-router-dom';
 
 
 const Musicas = () => {
@@ -22,14 +23,14 @@ const Musicas = () => {
     return data;
   }
 
-  async function createMusicas(authorData) {
+  async function createMusicas(musicasData) {
     try {
       const response = await fetch('http://localhost:8080/musicas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(authorData),
+        body: JSON.stringify(musicasData),
       });
 
       if (!response.ok) {
@@ -120,75 +121,10 @@ const Musicas = () => {
       ) : (
         <div className="table-container">
           <h3>Os dados foram carregados com sucesso!</h3>
-          <button className="create-button-musicas" onClick={() => setIsCreating(true)}>
-            Create Musicas
-          </button>
-          {isCreating && (
-            <div>
-              <h3>Create New Musicas</h3>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  createMusicas(newMusicasData);
-                }}
-              >
-                <label>
-                  Nome:
-                  <input
-                    type="text"
-                    value={newMusicasData.nome}
-                    onChange={(e) => setNewMusicasData({ ...newMusicasData, nome: e.target.value })}
-                  />
-                </label>
-                <label>
-                  genero:
-                  <input
-                    type="text"
-                    value={newMusicasData.genero}
-                    onChange={(e) =>
-                      setNewMusicasData({ ...newMusicasData, genero: e.target.value })
-                    }
-                  />
-                </label>
-                <label>
-                  DataLancamento:
-                  <input
-                    type="text"
-                    value={newMusicasData.dataLancamento}
-                    onChange={(e) =>
-                      setNewMusicasData({ ...newMusicasData, dataLancamento: e.target.value })
-                    }
-                  />
-                </label>
-                <label>
-                  ArtistaId:
-                  <input
-                    type="text"
-                    value={newMusicasData.artistaId}
-                    onChange={(e) =>
-                      setNewMusicasData({ ...newMusicasData, artistaId: e.target.value })
-                    }
-                  />
-                </label>
-                <label>
-                  AlbumId:
-                  <input
-                    type="text"
-                    value={newMusicasData.albumId}
-                    onChange={(e) =>
-                      setNewMusicasData({ ...newMusicasData, albumId: e.target.value })
-                    }
-                  />
-                </label>
-                <button type="submit" className="musicasButton">
-                  Create
-                </button>
-                <button onClick={() => setIsCreating(false)} className="musicasButton">
-                  Cancel
-                </button>
-              </form>
-            </div>
-          )}
+          <Link to="/musicas-form">
+             <button className="create-button-musicas">Create Musica</button>
+          </Link>
+          
           <table className="custom-table">
             <thead>
               <tr>
@@ -212,7 +148,7 @@ const Musicas = () => {
                   <td>{musicas.albumId}</td>
                   <td>
                     <button onClick={() => handleEditClick(musicas.id)} className='musicasButton'>Edit</button>
-                    <button onClick={() => deleteMusicas(musicas.id)} className='musicasButton'>Delete</button>
+                    <button onClick={() => deleteMusicas(musicas.id)} className='musicasButtonD'>Delete</button>
                   </td>
                 </tr>
               ))}
@@ -273,7 +209,7 @@ const Musicas = () => {
       <button type="submit" className="musicasButton">
         Update
       </button>
-      <button onClick={() => setIsUpdating(false)} className="musicasButton">
+      <button onClick={() => setIsUpdating(false)} className="musicasButtonCa">
         Cancel
       </button>
     </form>

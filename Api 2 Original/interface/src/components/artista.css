@@ -1,22 +1,25 @@
 .table-container {
     margin-top: 20px;
   }
+
+
   
   .table-container table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
+    background-color: #c9c2c2;
   }
   
   .table-container th,
   .table-container td {
     padding: 8px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #494949;
   }
   
   .table-container th {
-    background-color: #f2f2f2;
+    background-color: #705f5f;
     font-weight: bold;
   }
   
@@ -29,7 +32,7 @@
     padding: 5px 20px ;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
+    background-color: hsl(224, 100%, 50%);
     color: #fff;
     font-size: 16px;
     text-decoration: none;
@@ -40,13 +43,29 @@
     background-color: #0056b3;
   }
 
+  .artistaButtonD {
+    display: inline-block;
+    padding: 5px 20px ;
+    border: none;
+    border-radius: 4px;
+    background-color: hsl(0, 100%, 50%);
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-left: 3px;
+  }
+  .artistaButtonD:hover {
+    background-color: #b30600;
+  }
+
 
   .create-button-artista {
     display: inline-block;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
+    background-color: hsl(140, 93%, 30%);
     color: #fff;
     font-size: 16px;
     text-decoration: none;
@@ -54,5 +73,38 @@
   }
 
   .create-button-artista:hover {
-    background-color: #0056b3;
+    background-color: #00b30f;
+  }
+
+
+  .artistaButtonCr {
+    display: inline-block;
+    padding: 5px 20px ;
+    border: none;
+    border-radius: 4px;
+    background-color: hsl(140, 93%, 30%);
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-left: 3px;
+  }
+  .artistaButtonCr:hover {
+    background-color: #00b30f;
+  }
+
+  .artistaButtonCa {
+    display: inline-block;
+    padding: 5px 20px ;
+    border: none;
+    border-radius: 4px;
+    background-color: hsl(0, 100%, 50%);
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-left: 3px;
+  }
+  .artistaButtonCa:hover {
+    background-color: #b30600;
   }

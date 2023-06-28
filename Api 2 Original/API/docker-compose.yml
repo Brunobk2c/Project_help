@@ -35,12 +35,25 @@ services:
     command: 
              sh -c 'if [ ! -f /app/.migration_executed ]; 
              then echo "Create and Running database migration..."; 
-             sleep 16; 
+             sleep 20; 
              npx sequelize-cli db:create; 
              npx sequelize-cli db:migrate; 
              npx sequelize-cli db:seed:all;
              touch /app/.migration_executed; 
              fi && sleep 10 && npm start'
+
+  frontend:
+    build:
+      context: ../interface/
+      dockerfile: dockerfile.interface
+    ports:
+      - '3000:3000'
+    networks:
+      - musicas-network
+        
+    depends_on:
+      - app
+
 
 networks:
   musicas-network:
